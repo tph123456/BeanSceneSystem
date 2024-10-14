@@ -1,0 +1,50 @@
+﻿@model IEnumerable<BeanSceneSystem.Models.StaffPermission>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Staff Permissions</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+@*             <th>
+                @Html.DisplayNameFor(model => model.TableName)
+            </th> *@
+            <th>
+                @Html.DisplayNameFor(model => model.Staff)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PermissionType)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+@*                 <td>
+                    @Html.DisplayFor(modelItem => item.TableName)
+                </td> *@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Staff.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PermissionType)
+                </td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.PermissionID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.PermissionID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.PermissionID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

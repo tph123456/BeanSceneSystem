@@ -1,0 +1,66 @@
+﻿@model BeanSceneSystem.Models.Schedule
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Schedule</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="SittingID" />
+            <div class="form-group">
+                <label asp-for="SType" class="control-label"></label>
+                @Html.DropDownListFor(model => model.SType, new SelectList(new[]
+                         {
+                new { Value = "Breakfast", Text = "Breakfast" },
+                new { Value = "Lunch", Text = "Lunch" },
+                new { Value = "Dinner", Text = "Dinner" },
+                new { Value = "Special Event", Text = "Special Event" }
+                }, "Value", "Text"), new { @class = "form-control" })
+                <span asp-validation-for="SType" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StartDateTime" class="control-label"></label>
+                <input asp-for="StartDateTime" class="form-control" />
+                <span asp-validation-for="StartDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndDateTime" class="control-label"></label>
+                <input asp-for="EndDateTime" class="form-control" />
+                <span asp-validation-for="EndDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SCapacity" class="control-label"></label>
+                <input asp-for="SCapacity" class="form-control" />
+                <span asp-validation-for="SCapacity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                @Html.DropDownListFor(model => model.Status, new SelectList(new[]
+                         {
+                new { Value = "Open", Text = "Open" },
+                new { Value = "Closed", Text = "Closed" }
+                }, "Value", "Text"), new { @class = "form-control" })
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+
+            <div class="form-group" style="margin-top:10px; margin-bottom:10px">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
