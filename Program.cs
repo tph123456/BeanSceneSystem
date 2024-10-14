@@ -8,6 +8,10 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Ensure it listens on the port provided by Render
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080"; // Default to 8080 if Render doesn't provide a port
+builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -61,5 +65,5 @@ using (var scope = app.Services.CreateScope())
     await DbSeeder.SeedRolesAndAdminAsync(scope.ServiceProvider);
 }
 
-// Set Kestrel to listen on port 8080
-app.Run("http://0.0.0.0:8080"); // The application will now listen on port 8080
+
+app.Run(); 
