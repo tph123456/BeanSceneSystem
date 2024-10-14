@@ -1,8 +1,8 @@
-# Use the .NET 8.0 SDK for the build environment
+# Use the SDK image to build the app
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copy the project file and restore dependencies
+# Copy project file and restore dependencies
 COPY ["BeanSceneSystem.csproj", "./"]
 RUN dotnet restore "./BeanSceneSystem.csproj"
 
@@ -10,14 +10,13 @@ RUN dotnet restore "./BeanSceneSystem.csproj"
 COPY . .
 RUN dotnet publish "BeanSceneSystem.csproj" -c Release -o /app/publish
 
-# Use the .NET 8.0 runtime for the final image
+# Use the runtime image for the final stage
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
-EXPOSE 8080  # Expose the same port used in Program.cs
+EXPOSE 8080  # Expose the port used in Program.cs
 
 # Copy the published output from the build image
 COPY --from=build /app/publish .
-
-# Set the command to run the app
 ENTRYPOINT ["dotnet", "BeanSceneSystem.dll"]
+
 
