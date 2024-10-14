@@ -1,10 +1,10 @@
-# Base image containing the .NET runtime
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
+# Base image containing the .NET 8.0 runtime
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 EXPOSE 80
 
-# Use .NET SDK to build the app
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+# Use .NET 8.0 SDK to build the app
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copy project file and restore dependencies
