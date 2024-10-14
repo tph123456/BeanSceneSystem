@@ -4,8 +4,6 @@ using BeanSceneSystem.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -18,11 +16,9 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultUI()
     .AddDefaultTokenProviders();
-//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
-
 
 builder.Services.AddScoped<IFileService, FileServiceOuter.FileServiceInner>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
@@ -42,6 +38,10 @@ else
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
+
+// Ensure it listens on the port provided by Render
+var port = Environment.GetEnvironmentVariable("PORT") ?? "80"; // Default to 80 if PORT is not set
+app.Urls.Add($"http://*:{port}"); // Add URL binding
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

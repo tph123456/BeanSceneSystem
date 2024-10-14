@@ -1,13 +1,8 @@
-# Base image containing the .NET 8.0 runtime
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-WORKDIR /app
-EXPOSE 80
-
-# Use .NET 8.0 SDK to build the app
+# Use the .NET 8.0 SDK for the build environment
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copy project file and restore dependencies
+# Copy the project file and restore dependencies
 COPY ["BeanSceneSystem.csproj", "./"]
 RUN dotnet restore "./BeanSceneSystem.csproj"
 
@@ -15,10 +10,14 @@ RUN dotnet restore "./BeanSceneSystem.csproj"
 COPY . .
 RUN dotnet publish "BeanSceneSystem.csproj" -c Release -o /app/publish
 
-# Use the runtime base image to run the app
-FROM base AS final
+# Use the .NET 8.0 runtime for the final image
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
+EXPOSE 80
+
+# Copy the published output from the build image
 COPY --from=build /app/publish .
 
 # Set the command to run the app
 ENTRYPOINT ["dotnet", "BeanSceneSystem.dll"]
+
