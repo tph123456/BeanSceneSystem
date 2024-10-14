@@ -13,7 +13,7 @@ RUN dotnet publish "BeanSceneSystem.csproj" -c Release -o /app/publish
 # Use the .NET 8.0 runtime for the final image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
-EXPOSE 80
+EXPOSE 8080  # Expose the same port used in Program.cs
 
 # Copy the published output from the build image
 COPY --from=build /app/publish .

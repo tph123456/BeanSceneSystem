@@ -44,8 +44,7 @@ else
 }
 
 // Ensure it listens on the port provided by Render
-var port = Environment.GetEnvironmentVariable("PORT") ?? "80"; // Default to 80 if PORT is not set
-app.Urls.Add($"http://*:{port}"); // Add URL binding
+app.Urls.Add("http://0.0.0.0:8080"); // Use the desired port (8080 is common for Render)
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
