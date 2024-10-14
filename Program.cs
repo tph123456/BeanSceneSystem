@@ -43,9 +43,6 @@ else
     app.UseHsts();
 }
 
-// Ensure it listens on the port provided by Render
-app.Urls.Add("http://0.0.0.0:8080"); // Use the desired port (8080 is common for Render)
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -64,4 +61,5 @@ using (var scope = app.Services.CreateScope())
     await DbSeeder.SeedRolesAndAdminAsync(scope.ServiceProvider);
 }
 
-app.Run();
+// Set Kestrel to listen on port 8080
+app.Run("http://0.0.0.0:8080"); // The application will now listen on port 8080
